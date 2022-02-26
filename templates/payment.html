@@ -1,0 +1,352 @@
+{% load static %}
+{% load cart_template_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Music Space | Payment </title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+  
+
+  <style>
+	.cardForm-Field50 {
+  float: left;
+  width: 50%;
+}
+
+
+
+/* Makes the default card text easier to read */
+.jp-card .jp-card-front .jp-card-display, .jp-card .jp-card-back .jp-card-display {
+  text-shadow: 0 1px 2px #1D1F20;
+}
+/* Changes the default styles */
+.jp-card .jp-card-front, .jp-card .jp-card-back {
+  background: #27ae60!important;
+}
+.card-container form {
+ max-width: 350px;
+ text-align: center;
+}
+.form-container form {
+  margin: 10px auto;
+}
+.form-container input {
+  margin: 0 0 10px 0;
+  /* padding: 0; */
+  font-size: 16px;
+  float: left;
+  padding: 5px 0;
+  box-sizing: border-box;
+  webkit-box-shadow: none;
+  box-shadow: none;
+  /* width: 50%; */
+  display: block;
+}
+input.secondRow {
+  float: left;
+  display: block;
+  width: 100%;
+}
+
+.form-container label {
+  text-align: left;
+  float: left;
+  padding: 5px 0 0px 5px;
+  width: 100%;
+  font-family: arial;
+  text-transform: uppercase;
+  font-size: 14px;
+  /* font-weight: bold; */
+}
+
+input.button {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  /* background: #CCCCCC; */
+}
+/*input.button:hover {
+  background: #27ae60;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}*/
+ input:not([type=submit]):not([type=file]) {
+   /* omg so much cleaner */
+  border: 1px solid #DDD;
+    -webkit-box-shadow: 
+      inset 0 0 0px  rgba(0,0,0,0.1),
+            0 0 0px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 0px  rgba(0,0,0,0.1),
+            0 0 0px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 0px  rgba(0,0,0,0.1),
+            0 0 0px rgba(0,0,0,0.1); 
+    padding: 10px;
+}
+.form-container input[name="name"]{
+  width: 100%;
+}
+.form-container input[name="number"]{
+  width: 100%;
+}
+.form-container input[name="cvc"]{
+  border-left: 0px;
+}
+
+.CardDefault, .CardDefault:hover {
+  background: gray;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.CardWarning,.CardWarning:hover {
+  background: red;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.CardGood, .CardGood:hover {
+  background: #27ae60;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.form-container input.incorrectInfo {
+  border: red solid 1px;
+}
+  </style>
+
+</head>
+
+<body class="grey lighten-3">
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand waves-effect" href="/">
+        <strong class="orange-text">THE MUSIC SPACE</strong>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item">
+            <a class="nav-link waves-effect" href="/">Home
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link waves-effect" href="#">Checkout<span class="sr-only">(current)</span></a>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link waves-effect" href="/product">Products</a>
+          </li> -->
+
+          <!-- <li class="nav-item">
+            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About MDB</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
+              target="_blank">Free download</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Free
+              tutorials</a>
+          </li> -->
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="/order-summary">
+              <span class="badge red z-depth-1 mr-1"> {{request.user | cart_item_count}} </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href = "{% url 'account_logout' %}">
+              <i class="fa fa-sign-out"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Logout </span>
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href = "{% url 'account_login' %}">
+              <span class="clearfix d-none d-sm-inline-block"> Login </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href = "{% url 'account_signup' %}">
+              <span class="clearfix d-none d-sm-inline-block"> Sign Up </span>
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+
+		{% if messages %}
+			{% for message in messages %}
+			<div class="alert alert-{{message.tags}} alert-dismissible fade show" role = "alert">
+			{{ message }}
+			<button type = "button" class = "close" data-dismiss = "alert" aria-label = "Close">
+				<span aria-hidden = "true">&times;</span>
+			</button>
+			</div>
+			{% endfor %}
+		{% endif %}
+
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Payment</h2>
+
+		<div class="card-container">
+			<div class="card-wrapper"></div>
+
+			<div class="form-container">
+				<form action="">
+				<label for="number">Card Number</label>
+				<input placeholder="XXXX  XXXX  XXXX  XXXX" type="text" name="number">
+				<label for="name">Name on Card</label>
+				<input placeholder="Full Name" type="text" name="name"><br>
+
+				<div class="cardForm-Field50">
+					<label for="expiry">Expiry Date</label><rb>
+					<input placeholder="MM/YY" type="text" name="expiry" class="secondRow">
+				</div>
+
+				<div class="cardForm-Field50">
+					<label for="cvc">Security Code</label><br>
+					<input placeholder="XXX" type="text" name="cvc" class="secondRow incorrectInfo">
+				</div>
+					
+				<label for="name">Postal Code / ZIP</label>
+				<input placeholder="XXX XXX" type="text" name="name"><br>
+
+				<!-- Button Default -->
+				<a type="submit" value="Make Payment" class="btn btn-primary" href="/">Make Payment</a>
+				
+				</form>
+			</div>
+		</div>
+
+
+
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a href="https://www.facebook.com/mdbootstrap" target="_blank">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="https://twitter.com/MDBootstrap" target="_blank">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
+        <i class="fab fa-youtube mr-3"></i>
+      </a>
+
+      <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
+        <i class="fab fa-google-plus-g mr-3"></i>
+      </a>
+
+      <a href="https://dribbble.com/mdbootstrap" target="_blank">
+        <i class="fab fa-dribbble mr-3"></i>
+      </a>
+
+      <a href="https://pinterest.com/mdbootstrap" target="_blank">
+        <i class="fab fa-pinterest mr-3"></i>
+      </a>
+
+      <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
+        <i class="fab fa-github mr-3"></i>
+      </a>
+
+      <a href="http://codepen.io/mdbootstrap/" target="_blank">
+        <i class="fab fa-codepen mr-3"></i>
+      </a>
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  
+  <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
+  <script src = "{% static 'js/jquery.card.js' %}"></script>
+
+
+
+  
+
+
+
+</body>
+
+</html>
